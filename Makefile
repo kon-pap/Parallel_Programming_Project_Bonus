@@ -114,4 +114,4 @@ clean:
 	rm -rf *.o sequential omp mpi hybrid bonus *.out
 
 distclean:
-	rm -rf *.o sequential omp mpi hybrid bonus *.out *.prof*
+	rm -rf *.o sequential omp mpi hybrid bonus *.out *.prof* *.text
