@@ -26,22 +26,30 @@ float Point::distance_squared(Point &a, Point &b){
     }
     float dist = 0;
 
+    /* Using C Intrinsic functions instead of OMP SIMD
+     * No need for remainder loop because the dimension is a multiple of 8 */
     __m256 partial_sum = _mm256_set1_ps(0);
 
     for(int i = 0; i < a.dimension; i+=8){
+        //load 8 floats from a
         float * aaddr = &(a.coordinates[i]);
         __m256 a_i  = _mm256_loadu_ps(aaddr);
 
+        //load 8 floats from b
         float * baddr = &(b.coordinates[i]);
         __m256 b_i  = _mm256_loadu_ps(baddr);
 
+        //Substract these 8 floats
         __m256 tmp = _mm256_sub_ps(a_i, b_i);
 
+        //Square the result of the previous subtraction
         __m256 mul = _mm256_mul_ps(tmp, tmp);
 
+        //Add it to a temporary partial_sum
         partial_sum = _mm256_add_ps(mul, partial_sum);
     }
 
+    //Sum all elements of partial_sum to get the final result
     for (int i = 0; i < 8; i++)
     {
         dist += partial_sum[i];
