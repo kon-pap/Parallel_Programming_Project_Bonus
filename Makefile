@@ -103,6 +103,10 @@ perf_bonus: kdtree_bonus.cpp Node.cpp Node.hpp
 	$(MPICXX) $(MPICXX_FLAGS) $(OPENMP) -o bonus kdtree_bonus.cpp Node.cpp Utility.cpp
 	echo "1" | perf record -g -o perf_bonus_analysis.prof mpirun -np 4 --oversubscribe ./bonus
 	perf report -i perf_bonus_analysis.prof
+
+perf_bonus_server: kdtree_bonus.cpp Node.cpp Node.hpp
+	$(MPICXX) $(MPICXX_FLAGS) $(OPENMP) -o bonus kdtree_bonus.cpp Node.cpp Utility.cpp
+	echo "1" | perf record -g -o perf_bonus_analysis.prof mpirun -np 4 --oversubscribe ./bonus
 #-----------------------------------------------------------------------------------------#
 
 clean:
