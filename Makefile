@@ -26,6 +26,12 @@ perf_sequential: kdtree_sequential.cpp Node.cpp Node.hpp
 	$(CXX) $(CXX_FLAGS) -o sequential kdtree_sequential.cpp Node.cpp Utility.cpp
 	echo "1" | perf record -g -o perf_sequential_analysis.prof ./sequential 
 	perf report -i perf_sequential_analysis.prof
+
+perf_sequential_server: kdtree_sequential.cpp Node.cpp Node.hpp
+	$(CXX) $(CXX_FLAGS) -o sequential kdtree_sequential.cpp Node.cpp Utility.cpp
+	echo "1" | perf record -g -o perf_sequential_analysis.prof ./sequential 
+	perf report -i perf_sequential_analysis.prof > perf_sequential_analysis.text
+
 #-----------------------------------------------------------------------------------------#
 
 
